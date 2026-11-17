@@ -40,7 +40,7 @@ const featured = (await getCaseStudies()).slice(0, 3);
 
   <section class="section">
     <div class="container">
-      <ul class="grid">
+      <ul class="grid facts">
         {
           profile.facts.map((fact) => (
             <li class="card">
@@ -107,17 +107,20 @@ const featured = (await getCaseStudies()).slice(0, 3);
 <style>
   .hero-inner {
     display: grid;
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: center;
   }
 
+  /* Small screens: a small portrait above the text. The width must be a fixed
+     length: a percentage here lets the image's natural size set the column
+     width in the two-column layout below and squeezes the text. */
   .portrait {
-    width: min(100%, 16rem);
+    order: -1;
+    width: 7.5rem;
     aspect-ratio: 1;
     border-radius: 50%;
     object-fit: cover;
     border: 1px solid var(--line);
-    justify-self: start;
   }
 
   .monogram {
@@ -126,8 +129,7 @@ const featured = (await getCaseStudies()).slice(0, 3);
     background: var(--accent-soft);
     color: var(--accent);
     font-family: var(--font-display);
-    font-size: 4.5rem;
-    width: 9rem;
+    font-size: 3.25rem;
   }
 
   .focus {
@@ -138,19 +140,27 @@ const featured = (await getCaseStudies()).slice(0, 3);
     margin: 1.5rem 0 0;
   }
 
-  @media (min-width: 52rem) {
+  @media (min-width: 44rem) {
     .hero-inner {
-      grid-template-columns: 1fr auto;
-      gap: 4rem;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: clamp(2rem, 5vw, 4rem);
     }
 
     .portrait {
-      justify-self: end;
+      order: 0;
+      width: clamp(12rem, 24vw, 17rem);
     }
 
     .monogram {
-      width: 14rem;
-      font-size: 6.5rem;
+      font-size: 6rem;
+    }
+
+    .facts {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .focus {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 </style>

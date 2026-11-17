@@ -59,8 +59,7 @@ import { experience } from '../data/experience';
                   <li>
                     <span>{role.title}</span>
                     <span class="role-meta">
-                      {role.period}
-                      {role.location && `, ${role.location}`}
+                      {role.location ? `${role.period}, ${role.location}` : role.period}
                     </span>
                     {role.summary && <p class="role-summary">{role.summary}</p>}
                   </li>

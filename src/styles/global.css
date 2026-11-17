@@ -135,12 +135,18 @@ img {
   border-top: 1px solid var(--line);
 }
 
-.prose {
+/* Text keeps a readable line length but stays on the page's left edge, in
+   line with the headings above and the sections below. */
+.prose > * {
   max-width: var(--measure);
 }
 
 .prose h2 {
   margin-top: 2em;
+}
+
+.prose > :first-child {
+  margin-top: 0;
 }
 
 .prose ul,
@@ -178,6 +184,11 @@ img {
 
 .page-head h1 {
   font-size: clamp(2rem, 5vw, 3rem);
+}
+
+/* The page heading and its first section read as one block. */
+.page-head + .section {
+  padding-top: clamp(1rem, 3vw, 2rem);
 }
 
 /* Buttons */
@@ -246,10 +257,11 @@ img {
   color: var(--accent);
 }
 
-.fact-value {
+.card .fact-value {
   font-family: var(--font-display);
   font-size: 1.5rem;
   line-height: 1.2;
+  color: var(--text);
   margin: 0 0 0.3rem;
 }
 
