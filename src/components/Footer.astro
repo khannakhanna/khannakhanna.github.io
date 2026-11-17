@@ -1,0 +1,50 @@
+---
+import { profile } from '../data/profile';
+import { href } from '../lib/url';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container inner">
+    <p>
+      © {year} {profile.name}. Views are my own and do not represent my employer.
+    </p>
+    <ul>
+      <li><a href={profile.links.linkedin} rel="me noopener">LinkedIn</a></li>
+      <li><a href={href('/contact/')}>Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-block: 1.5rem;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  ul {
+    display: flex;
+    gap: 1.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  a {
+    color: var(--muted);
+  }
+</style>

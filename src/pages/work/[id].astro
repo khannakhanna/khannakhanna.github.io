@@ -1,0 +1,57 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ContactCta from '../../components/ContactCta.astro';
+import { getCaseStudies } from '../../lib/content';
+import { href } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const studies = await getCaseStudies();
+  return studies.map((study) => ({ params: { id: study.id }, props: { study } }));
+}
+
+const { study } = Astro.props;
+const { Content } = await render(study);
+---
+
+<Base title={study.data.title} description={study.data.summary}>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow"><a href={href('/work/')}>Work</a></p>
+      <h1>{study.data.title}</h1>
+      <p class="lede">{study.data.summary}</p>
+      <p class="muted meta">
+        {study.data.role} · {study.data.period}
+        {study.data.draft && <span class="badge draft">Draft</span>}
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose">
+      <Content />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <ContactCta />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .meta {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .meta .badge {
+    margin-left: 0.5rem;
+  }
+
+  .eyebrow a {
+    color: inherit;
+    text-decoration: none;
+  }
+</style>

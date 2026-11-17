@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import { profile } from '../data/profile';
+import { href } from '../lib/url';
+
+const { mentoring } = profile;
+---
+
+<Base
+  title="Mentoring and advisory"
+  description="Mentoring for people moving into product management and payments, and advisory conversations on real-time payments, payments platforms and applied AI."
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">Mentoring and advisory</p>
+      <h1>Time for people and teams outside my day job</h1>
+      <p class="lede">
+        I moved from engineering into product leadership inside one company, across two countries. I am glad to share
+        what I learned on the way.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose">
+      <h2>Mentoring</h2>
+      <p>
+        I am a volunteer mentor on the
+        <a href={mentoring.organisationUrl} rel="noopener">{mentoring.organisation}</a>
+        platform (since {mentoring.since}), helping small businesses navigate and solve business problems. The conversations I find most useful are about:
+      </p>
+      <ul>
+        <li>Moving from engineering into product management</li>
+        <li>Growing from individual contributor to product leader</li>
+        <li>Building a career in payments and fintech</li>
+        <li>Working across engineering, risk, compliance and commercial teams</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose">
+      <h2>Advisory</h2>
+      <p>
+        I take on a small number of advisory conversations where there is no conflict with my role at Visa. Areas
+        where I can help:
+      </p>
+      <ul>
+        <li>Product strategy for real-time payments and money movement</li>
+        <li>Payments API and platform design, including the onboarding and integration experience</li>
+        <li>Applying AI in a regulated product, for clients and for product teams</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Start a conversation</h2>
+        <p>Tell me a little about where you are and what you would like help with.</p>
+        <div class="actions">
+          {
+            profile.bookingUrl && (
+              <a class="button" href={profile.bookingUrl} rel="noopener">
+                Book a call
+              </a>
+            )
+          }
+          <a class={profile.bookingUrl ? 'button secondary' : 'button'} href={href('/contact/')}>Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactCta from '../components/ContactCta.astro';
+import { profile } from '../data/profile';
+import { formatMonth, getSpeaking } from '../lib/content';
+
+const events = await getSpeaking();
+const kindLabel: Record<string, string> = {
+  panel: 'Discussion Panelist',
+  talk: 'Speaker',
+  podcast: 'Podcast Guest',
+  interview: 'Interviewee',
+  event: 'Speaker',
+};
+---
+
+<Base
+  title="Speaking"
+  description="Gautam Khanna speaks about real-time payments, payments APIs and platforms, applied AI in regulated products, and moving from engineering into product."
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">Speaking and media</p>
+      <h1>Talks, panels and conversations</h1>
+      <p class="lede">
+        I speak about how money moves in real time, and what it takes to build payment products that clients can
+        actually adopt.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Topics</h2>
+      <ul class="plain-list">
+        {profile.speakingTopics.map((topic) => <li>{topic}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  {
+    events.length > 0 && (
+      <section class="section">
+        <div class="container">
+          <h2>Past events</h2>
+          <ul class="plain-list">
+            {events.map((entry) => (
+              <li>
+                {entry.data.url ? (
+                  <a href={entry.data.url} rel="noopener">
+                    {entry.data.title}
+                  </a>
+                ) : (
+                  <strong>{entry.data.title}</strong>
+                )}
+                {entry.data.draft && <span class="badge draft">Draft</span>}
+                <span class="item-meta">
+                  {entry.data.role ?? kindLabel[entry.data.kind]} · {entry.data.event} · {formatMonth(entry.data.date)}
+                  {entry.data.location && ` · ${entry.data.location}`}
+                </span>
+                {entry.body && <p class="item-summary">{entry.body.trim()}</p>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section">
+    <div class="container prose">
+      <h2>Speaker bio</h2>
+      <p>
+        {profile.name} is a {profile.role} at {profile.employer}, leading money movement and real-time payments
+        products within Visa Direct. Gautam spent more than a decade as a software engineer in Singapore and the UK
+        before moving into product management in 2022, and is based in London.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <ContactCta
+        heading="Invite me to speak"
+        text="For conferences, panels, podcasts and team events on payments and product. Send a note with the event, the audience and the date."
+      />
+    </div>
+  </section>
+</Base>

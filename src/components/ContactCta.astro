@@ -1,0 +1,23 @@
+---
+import { profile } from '../data/profile';
+import { href } from '../lib/url';
+
+interface Props {
+  heading?: string;
+  text?: string;
+}
+
+const {
+  heading = 'Speaking, mentoring and advisory',
+  text = 'I speak about real-time payments and payments platforms, mentor people moving into product, and take on a small number of advisory conversations where there is no conflict with my role at Visa.',
+} = Astro.props;
+---
+
+<div class="cta">
+  <h2>{heading}</h2>
+  <p>{text}</p>
+  <div class="actions">
+    <a class="button" href={href('/contact/')}>Get in touch</a>
+    <a class="button secondary" href={profile.links.linkedin} rel="noopener">Connect on LinkedIn</a>
+  </div>
+</div>

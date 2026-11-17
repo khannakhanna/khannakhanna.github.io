@@ -1,0 +1,28 @@
+{
+  "name": "portfolio",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "predev": "node scripts/ensure-compiler.mjs",
+    "prebuild": "node scripts/ensure-compiler.mjs",
+    "precheck": "node scripts/ensure-compiler.mjs",
+    "postinstall": "node scripts/ensure-compiler.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.5",
+    "astro": "^7.4.12"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@napi-rs/wasm-runtime": "^1.2.7",
+    "typescript": "^6.0.0"
+  }
+}

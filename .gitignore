@@ -1,0 +1,14 @@
+# build output and tooling
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+
+# source documents with private contact details: never commit
+Profile.pdf
+*.pdf
+private/
+
+# local handover notes (status, LinkedIn review): kept off GitHub
+plan.md

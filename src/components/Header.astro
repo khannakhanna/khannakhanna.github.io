@@ -1,0 +1,155 @@
+---
+import { profile } from '../data/profile';
+import { getCaseStudies, getWriting } from '../lib/content';
+import { href } from '../lib/url';
+
+const hasWork = (await getCaseStudies()).length > 0;
+const hasWriting = (await getWriting()).length > 0;
+
+const items = [
+  { label: 'About', path: '/about/' },
+  ...(hasWork ? [{ label: 'Work', path: '/work/' }] : []),
+  { label: 'Speaking', path: '/speaking/' },
+  { label: 'Mentoring', path: '/mentoring/' },
+  ...(hasWriting ? [{ label: 'Writing', path: '/writing/' }] : []),
+  { label: 'Contact', path: '/contact/' },
+];
+
+const trim = (value: string) => value.replace(/\/$/, '');
+const current = trim(Astro.url.pathname);
+const isActive = (path: string) => current.startsWith(trim(href(path)));
+---
+
+<header class="site-header">
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="container bar">
+    <a class="brand" href={href('/')}>{profile.name}</a>
+    <nav aria-label="Main">
+      <ul>
+        {
+          items.map((item) => (
+            <li>
+              <a href={href(item.path)} aria-current={isActive(item.path) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <button class="theme" type="button" data-theme-toggle aria-label="Switch between light and dark theme">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18Zm0 16V5a7 7 0 0 1 0 14Z"></path>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<script>
+  const button = document.querySelector('[data-theme-toggle]');
+  button?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const active = root.dataset.theme ?? (systemDark ? 'dark' : 'light');
+    const next = active === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      // Storage can be unavailable (private mode); the choice then lasts for this page only.
+    }
+  });
+</script>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+
+  .skip {
+    position: absolute;
+    left: -999rem;
+  }
+
+  .skip:focus {
+    left: 1rem;
+    top: 0.5rem;
+    background: var(--surface);
+    padding: 0.5rem 0.75rem;
+    z-index: 10;
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    padding-block: 0.9rem;
+  }
+
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1875rem;
+    color: var(--text);
+    text-decoration: none;
+    margin-right: auto;
+  }
+
+  nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  ul {
+    display: flex;
+    gap: 1.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  nav a {
+    display: block;
+    padding: 0.25rem 0;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+  }
+
+  nav a:hover {
+    color: var(--text);
+  }
+
+  nav a[aria-current='page'] {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+  }
+
+  .theme {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  @media (min-width: 46rem) {
+    nav {
+      order: 0;
+      width: auto;
+      overflow: visible;
+    }
+  }
+</style>

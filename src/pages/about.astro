@@ -1,0 +1,110 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactCta from '../components/ContactCta.astro';
+import { profile } from '../data/profile';
+import { experience } from '../data/experience';
+---
+
+<Base
+  title="About"
+  description="Engineer turned product leader: Gautam Khanna's path from building payment systems in Singapore to leading real-time payments products at Visa in London."
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">About</p>
+      <h1>Engineer turned product leader</h1>
+      <p class="lede">
+        I spent more than a decade as a software engineer, much of it on payment systems, before I started deciding
+        what those systems should do next.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose">
+      <p>
+        I am a Director of Product Management at Visa, where I lead money movement and real-time payments products
+        within Visa Direct. The work is building API-driven payment platforms that let banks, fintechs and enterprise
+        clients move funds securely and compliantly, across regions and use cases.
+      </p>
+      <p>
+        I came to product through engineering. I started in 2010 as an application developer on the Vocalink payment
+        infrastructure project, then spent nine years in Singapore as a software engineer at Cognizant, NCS Group and
+        Visa. I moved to London with Visa in 2021 and from engineering into product management in 2022.
+      </p>
+      <p>
+        That background shapes how I work. I can go deep with engineering, risk, compliance and operations teams, and
+        still keep the client's experience in view: how they onboard, how they integrate, and how quickly they get to
+        value. Years of working on mission-critical systems also left me with a bias for resilience, scale and
+        transaction integrity.
+      </p>
+      <p>
+        Alongside the core portfolio I drive applied AI work: capabilities that improve decisions, automation and
+        client experience in payments, and tools that help product teams get to insight and prioritise faster. In a
+        regulated business, that means balancing new ideas against risk, compliance and trust.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Experience</h2>
+      <ol class="timeline">
+        {
+          experience.map((employer) => (
+            <li>
+              <h3>{employer.company}</h3>
+              <ul class="roles">
+                {employer.roles.map((role) => (
+                  <li>
+                    <span>{role.title}</span>
+                    <span class="role-meta">
+                      {role.period}
+                      {role.location && `, ${role.location}`}
+                    </span>
+                    {role.summary && <p class="role-summary">{role.summary}</p>}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Education and certifications</h2>
+      <ul class="plain-list">
+        <li>
+          {profile.education.degree}
+          <span class="item-meta">{profile.education.school}, {profile.education.years}</span>
+        </li>
+        {
+          profile.certifications.map((cert) => (
+            <li>
+              {cert.name}
+              <span class="item-meta">
+                {cert.issuer}, {cert.year}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="muted languages">Languages: {profile.languages.join(', ')}.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <ContactCta />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .languages {
+    margin: 1.5rem 0 0;
+  }
+</style>

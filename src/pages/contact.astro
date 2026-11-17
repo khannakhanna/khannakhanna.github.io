@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import { profile } from '../data/profile';
+---
+
+<Base title="Contact" description={`How to get in touch with ${profile.name} about speaking, mentoring and advisory.`}>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">Contact</p>
+      <h1>Get in touch</h1>
+      <p class="lede">
+        The best way to reach me is a message on LinkedIn. I read everything, and reply fastest when the note says
+        what you need.
+      </p>
+      <div class="actions">
+        <a class="button" href={profile.links.linkedin} rel="me noopener">Message me on LinkedIn</a>
+        {
+          profile.email && (
+            <a class="button secondary" href={`mailto:${profile.email}`}>
+              {profile.email}
+            </a>
+          )
+        }
+        {
+          profile.bookingUrl && (
+            <a class="button secondary" href={profile.bookingUrl} rel="noopener">
+              Book a call
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Good reasons to write</h2>
+      <ul class="plain-list">
+        <li>
+          Speaking
+          <span class="item-meta">Conferences, panels, podcasts and team events on payments and product.</span>
+        </li>
+        <li>
+          Mentoring
+          <span class="item-meta">Moving into product, or building a career in payments.</span>
+        </li>
+        <li>
+          Advisory
+          <span class="item-meta">Real-time payments, payments platforms and applied AI in regulated products.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+</Base>

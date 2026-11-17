@@ -1,0 +1,54 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCaseStudies } from '../../lib/content';
+import { href } from '../../lib/url';
+
+const studies = await getCaseStudies();
+---
+
+<Base
+  title="Work"
+  description="Case studies from Gautam Khanna's work on real-time payments and money movement products."
+  noindex={studies.length === 0}
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">Work</p>
+      <h1>Case studies</h1>
+      <p class="lede">A few product stories: the problem, what I did, and what came of it.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      {
+        studies.length === 0 ? (
+          <p class="muted">Case studies are on the way.</p>
+        ) : (
+          <ul class="grid">
+            {studies.map((study) => (
+              <li class="card">
+                <h3>
+                  <a class="card-link" href={href(`/work/${study.id}/`)}>
+                    {study.data.title}
+                  </a>
+                </h3>
+                <p>{study.data.summary}</p>
+                <ul class="tags">
+                  {study.data.draft && (
+                    <li>
+                      <span class="badge draft">Draft</span>
+                    </li>
+                  )}
+                  {study.data.tags.map((tag) => (
+                    <li class="tag">{tag}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+</Base>

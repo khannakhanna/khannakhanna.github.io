@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import { formatDay, getWriting } from '../../lib/content';
+import { href } from '../../lib/url';
+
+const posts = await getWriting();
+---
+
+<Base
+  title="Writing"
+  description="Notes from Gautam Khanna on payments, real-time money movement and product management."
+  noindex={posts.length === 0}
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">Writing</p>
+      <h1>Notes on payments and product</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      {
+        posts.length === 0 ? (
+          <p class="muted">Nothing published yet. First pieces are on the way.</p>
+        ) : (
+          <ul class="plain-list">
+            {posts.map((post) => (
+              <li>
+                <a href={href(`/writing/${post.id}/`)}>{post.data.title}</a>
+                {post.data.draft && <span class="badge draft">Draft</span>}
+                <span class="item-meta">
+                  {formatDay(post.data.pubDate)} · {post.data.description}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+</Base>
